@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Product>
+
+<main role="main">
+    @if (TempData["Error"] != null)
+    {
+        <div class="col-md-12 alert alert-danger">
+            <span><b>Sorry!</b> - @TempData["Error"]</span>
+        </div>
+    }
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h2 class="jumbotron-heading">Puhdas Market Place</h2>
+            <p class="lead text-muted">
+                <b>Welcome to Puhdas, your one-stop destination for quality shoes at unbeatable prices!</b><br>
+                At Puhdas, we are committed to making your shoe shopping experience convenient and affordable. 
+                Explore our wide range of stylish and comfortable footwear, and step into a world of affordable fashion.<br>
+               
+            </p>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="btn btn-outline-primary" asp-area="" asp-controller="Dashboard" asp-action="Index">My Orders </a>
+
+                <a class="btn btn-outline-secondary" asp-area="" asp-controller="User" asp-action="UserProfile">My Profile</a>
+            }
+            else
+            {
+                <p>
+                    <a class="btn btn-outline-primary" asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
+
+                    <a class="btn btn-outline-secondary" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                </p>
+            }
+            
+        </div>
+    </section>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4">
+                        <div id="img" class="card mb-4 box-shadow">
+                            <img height="250px" class="card-img-top" src="@item.Image" alt="Card image cap">
+                            <div class="card-body">
+                                <p>@item.Name</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a asp-route-id="@item.Id" asp-Controller="Order" type="button" class="btn btn-outline-secondary" asp-action="Create">Buy</a>
+                                            <a asp-action="Detail" asp-controller="Product" asp-area="" asp-route-id="@item.Id" type="button" class="btn btn-outline-secondary">Reviews</a>
+                                        }
+                                        else
+                                        {
+                                            <a  asp-Controller="Account" type="button" class="btn btn-outline-secondary" asp-action="Login">Buy</a>
+                                            <a asp-action="Detail" asp-controller="Product" asp-area="" asp-route-id="@item.Id" type="button" class="btn btn-outline-secondary">Reviews</a>
+                                        }
+                                        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                                        {
+                                            <a asp-route-id="@item.Id" asp-Controller="Product" type="button" class="btn btn-outline-secondary" asp-action="Edit">Edit</a>
+                                            <a asp-route-id="@item.Id" asp-Controller="Product" type="button" class="btn btn-outline-secondary" asp-action="Delete">Delete</a>
+                                        }
+                                    </div>
+                                    <small class="text-muted">N @item.Price</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</main>

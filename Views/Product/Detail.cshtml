@@ -1,0 +1,50 @@
+﻿@model Product
+
+<div class="row">
+    <div class="col-md-8">
+        <img class="img-fluid" src="@Model.Image" width="80%" height="150" alt="Image">
+    </div>
+    <div class="col-md-4">
+        <h3 class="my-3">@Model.Name</h3>
+        <p><b>Price: </b>N @Model.Price</p>
+      
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a asp-action="Create" asp-controller="Order" asp-area="" asp-route-id="@Model.Id" type="button" class="btn btn-outline-secondary">Place your order</a>
+        }
+        else
+        {
+            <a asp-Controller="Account" type="button" class="btn btn-outline-secondary" asp-action="Login">Place your order</a>
+        }
+    </div>
+    <div>
+        <h5>Reviews</h5><hr>
+        @if (Model.Reviews.Count() != 0)
+        {
+            @foreach (var review in Model.Reviews)
+            {
+                <p>@review.Content</p>
+                <small>By: @review.Reviewer</small>
+                <small>@review.CreatedAt?.ToString("yyyy/MM/dd")</small><hr>
+            }
+        }
+        else
+        {
+            <div>
+                <h6>No Reviews</h6>
+            </div>
+        }
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div style="margin-top:20px; margin-bottom:30px">
+                <a asp-controller="Review" asp-route-id="@Model.Id" asp-action="Create" type="button" class="btn btn-sm btn-outline-danger">Add Reviews</a>
+            </div>
+        }
+        else
+        {
+            <div style="margin-top:20px; margin-bottom:30px">
+                <a asp-Controller="Account" type="button" class="btn btn-outline-danger" asp-action="Login">Add Review</a>
+            </div>
+        }
+    </div>
+</div>

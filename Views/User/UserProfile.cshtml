@@ -1,0 +1,39 @@
+﻿﻿@using PuhdasApp.ViewModels
+@model UserDetailViewModel
+
+
+<div class="album py-5 bg-light">
+    <h3>My Profile</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <img class="img-fluid" src="@Model.ProfileImageUrl" width="50%" height="50" alt="Image">
+            </div>
+            <div class="col-md-4">
+                <h6 class="my-3">@Model.FirstName, @Model.LastName</h6>
+                <h3 class="my-3">My Details</h3>
+                <ul>
+                    <li>Email Address: <b>@Model.Email</b></li>
+                    <li>Phone Number: <b>@Model.PhoneNumber</b></li>
+                    @if (Model.City != null && Model.State != null)
+                    {
+                        <li>Location: <b>@Model.City, @Model.State</b></li>
+                    }
+                    else
+                    {
+                        <li>Location: </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div style="margin-top:20px;margin-bottom:30px">
+             <a class="btn btn-warning" asp-area="" asp-controller="Dashboard" asp-action="EditUserProfile">Edit Profile</a>
+
+             <a class="btn btn-outline-primary" asp-area="" asp-controller="Dashboard" asp-action="Index">Go to Dashboard</a>
+
+        </div>
+    </div>
+            
+</div>
+    </div>
+</div>

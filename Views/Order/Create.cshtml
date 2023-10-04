@@ -1,0 +1,38 @@
+﻿@using PuhdasApp.Data.Enum;
+@using PuhdasApp.ViewModels;
+@model OrderViewModel
+
+<div class="album py-5 bg-light">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-8">
+                <img class="img-fluid" src="@Model.Image" width="80%" height="150" alt="Image">
+            </div>
+            <div class="col-md-4">
+                <h3 class="my-3">@Model.Name</h3>
+                <p>N @Model.Price</p>
+                <h3 class="my-3">Make new Order</h3>
+                <div>
+                    <form method="post" asp-action="Create">
+                        <label asp-for="@Model.Quantity">Quantity</label>
+                        <input width="100px" class="form-control" asp-for="@Model.Quantity" type="number">
+
+                        <div class="form-group">
+                            <label asp-for="@Model.Size">Size</label>
+                            <select asp-for="@Model.Size" asp-items="@Html.GetEnumSelectList<Sizes>()" class="form-control">
+                                <option>---Select---</option>
+                            </select>
+                            <span asp-validation-for="@Model.Size" class="text-danger"></span>
+                        </div>
+                        <div style="margin-top:30px">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <a type="button" class="btn btn-outline-danger" asp-area="" asp-controller="Product" asp-action="Index">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
